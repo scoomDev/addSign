@@ -6,6 +6,7 @@ use App\Entity\Department;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -20,6 +21,8 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $faker = Factory::create();
+
         $department = new Department();
         $department->setName('adct')
             ->setFirstColor('#FFFFFF')
@@ -41,10 +44,19 @@ class AppFixtures extends Fixture
             ->setFunction('Super Admin');
         $manager->persist($user);
 
-        // TODO : add Faker
-//        for ($i = 0; $i < 50; $i++) {
-//
-//        }
+        for ($i = 0; $i < 50; $i++) {
+            $user = new User();
+            $user->setEmail($faker->safeEmail)
+                ->setPassword($this->encoder->encodePassword($user, 'password'))
+                ->setDepartment($department)
+                ->setFirstname($faker->firstName)
+                ->setLastname($faker->lastName)
+                ->setPhoneNumber($faker->phoneNumber)
+                ->setCreatedAt(new \DateTime())
+                ->setRoles(['ROLE_USER'])
+                ->setFunction($faker->jobTitle);
+            $manager->persist($user);
+        }
 
         $manager->flush();
     }

@@ -12,6 +12,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * @ApiResource()
  * @UniqueEntity("email")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="sign_user")
  */
 class User implements UserInterface
 {

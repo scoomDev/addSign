@@ -13,6 +13,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * @ApiResource()
  * @Vich\Uploadable()
  * @ORM\Entity(repositoryClass="App\Repository\DepartmentRepository")
+ * @ORM\Table(name="sign_department")
  */
 class Department
 {
